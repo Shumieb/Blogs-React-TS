@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import type { blogType } from "../utils/entityTypes";
 import BlogVCard from "./blogVCard";
-import { blogsData } from "../mockData/mockData";
 import { Link } from "react-router";
 import useBlogsStore from "../stores/blogsStore";
 
 function FeaturedList() {
   // variables
-  const [featuredBlogs, setFeaturedBlogs] = useState<blogType[]>(blogsData);
+  const [featuredBlogs, setFeaturedBlogs] = useState<blogType[]>();
 
   // store
   const { getFeaturedBlog } = useBlogsStore();

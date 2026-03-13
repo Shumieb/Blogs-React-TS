@@ -20,7 +20,20 @@ export const getFeaturedBlogsFromDb = async () => {
 
     return data;
   } catch (err: any) {
-    console.log("Error fetching featured data");
+    console.log("Error fetching featured blogs data");
+    return err.message;
+  }
+};
+
+// get blogs by search term
+export const getBlogsBySearchTermFromDb = async (term: string) => {
+  try {
+    const res = await fetch(`http://127.0.0.1:8000/api/blogs?search=${term}`);
+    const data = await res.json();
+
+    return data;
+  } catch (err: any) {
+    console.log("Error fetching blogs by search term");
     return err.message;
   }
 };

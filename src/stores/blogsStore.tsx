@@ -3,6 +3,7 @@ import { combine } from "zustand/middleware";
 import type { blogType } from "../utils/entityTypes";
 import {
   getAllBlogFromDb,
+  getBlogsBySearchTermFromDb,
   getFeaturedBlogsFromDb,
 } from "../clients/expressSqliteClient";
 
@@ -58,6 +59,29 @@ const useBlogsStore = create(
         }
 
         return featureBlogs;
+      },
+
+      // Function to get blogs by search term
+      getBlogsBySearchTerm: async (term: string) => {
+        let searchBlogs: blogType[] = [];
+
+        if (useBlogsStore.getState().blogs.length < 1) {
+          //Get data from database
+          searchBlogs = await getBlogsBySearchTermFromDb(term);
+          return searchBlogs;
+        } else {
+          // get from state
+          searchBlogs = useBlogsStore
+            .getState()
+            .blogs.filter(
+              (blog: blogType) =>
+                blog.title.toLowerCase().includes(term.toLowerCase()) ||
+                blog.description.toLowerCase().includes(term.toLowerCase()) ||
+                blog.blogText.toLowerCase().includes(term.toLowerCase()),
+            );
+        }
+
+        return searchBlogs;
       },
 
       // Function to add to a new blog

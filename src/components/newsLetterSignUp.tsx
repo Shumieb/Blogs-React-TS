@@ -9,6 +9,9 @@ function NewsLetterSignUp() {
     e.preventDefault();
     // TODO: Add functionality to add to mailing list
     console.log("Add to mailing list");
+
+    //reset values
+    setEmail("");
   };
 
   return (
