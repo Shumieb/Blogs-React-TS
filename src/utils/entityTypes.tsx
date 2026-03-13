@@ -8,3 +8,12 @@ export interface blogType {
   userId: number;
   categoryId: number;
 }
+
+export interface userType {
+  userId: number;
+  name: string;
+  userName: string;
+  biography: string;
+  image: string;
+  type: string;
+}

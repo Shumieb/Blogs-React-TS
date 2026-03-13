@@ -1,7 +1,10 @@
 import { create } from "zustand";
 import { combine } from "zustand/middleware";
 import type { blogType } from "../utils/entityTypes";
-import { blogsData } from "../mockData/mockData";
+import {
+  getAllBlogFromDb,
+  getFeaturedBlogsFromDb,
+} from "../clients/expressSqliteClient";
 
 const useBlogsStore = create(
   combine(
@@ -13,10 +16,11 @@ const useBlogsStore = create(
       // Function to initialize the store
       initializeBlogs: async () => {
         if (useBlogsStore.getState().blogs.length < 1) {
-          // TODO: Get data from database
-          // get data from mockData
-          set({ blogs: blogsData });
-          return blogsData;
+          // Get data from database
+          const dbData = await getAllBlogFromDb();
+          // set state
+          set({ blogs: dbData });
+          return dbData;
         } else {
           // return state data
           return useBlogsStore.getState().blogs;
@@ -39,13 +43,13 @@ const useBlogsStore = create(
       },
 
       //Function to get featured blogs
-      getFeaturedBlog: () => {
-        //TODO: Delete from database
-
+      getFeaturedBlog: async () => {
         let featureBlogs: blogType[] = [];
 
         if (useBlogsStore.getState().blogs.length < 1) {
-          // TODO: Get from database
+          //Get data from database
+          featureBlogs = await getFeaturedBlogsFromDb();
+          return featureBlogs;
         } else {
           // get from state
           featureBlogs = useBlogsStore

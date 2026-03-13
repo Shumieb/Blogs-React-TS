@@ -1,4 +1,15 @@
-# React + TypeScript + Vite
+## Blog site
+
+Tech Stack:
+
+- React
+- TypeScript
+- Tailwind CSS
+- CSS
+- React Router
+- React Icons
+- Zustand
+- Fetch API
 
 All Users can
 
