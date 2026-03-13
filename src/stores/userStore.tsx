@@ -32,7 +32,7 @@ const useUsersStore = create(
         let author: userType | undefined;
 
         if (useUsersStore.getState().authors.length < 1) {
-          //TODO: get data from the database
+          //get data from the database
           author = await getAuthorByIdFromDb(id);
         } else {
           author = useUsersStore

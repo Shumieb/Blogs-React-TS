@@ -1,13 +1,14 @@
 import { useEffect } from "react";
-import BlogsList from "../components/blogsList";
 import FeaturedList from "../components/featuredList";
 import HomeHero from "../components/homeHero";
 import NewsLetterSignUp from "../components/newsLetterSignUp";
 import useBlogsStore from "../stores/blogsStore";
+import useUsersStore from "../stores/userStore";
 
 function HomePage() {
   // store
   const { initializeBlogs } = useBlogsStore();
+  const { initializeAuthors } = useUsersStore();
 
   useEffect(() => {
     getData();
@@ -15,6 +16,7 @@ function HomePage() {
 
   const getData = async () => {
     await initializeBlogs();
+    await initializeAuthors();
   };
 
   return (
@@ -22,7 +24,6 @@ function HomePage() {
       <HomeHero />
       <FeaturedList />
       <NewsLetterSignUp />
-      <BlogsList />
     </div>
   );
 }

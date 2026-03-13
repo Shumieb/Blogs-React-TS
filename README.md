@@ -28,3 +28,6 @@ Authors
 - add blogs []
 - update their own blogs []
 - delete their own blogs []
+
+TODO:
+[] Add functionality to add an email to the mailing list

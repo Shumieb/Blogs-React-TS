@@ -32,7 +32,7 @@ function FeaturedList() {
             return <BlogVCard key={blog.blogId} blog={blog} />;
           })}
       </div>
-      <div className="text-center py-2 px-2">
+      <div className="text-center py-2 px-2 my-2">
         <Link
           to="/blogs"
           className="bg-purple-950 text-white text-lg text-center py-2 px-4 rounded shadow-md hover:shadow-xl"

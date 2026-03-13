@@ -7,7 +7,7 @@ import { Link } from "react-router";
 
 function HomeHero() {
   return (
-    <section className="bg-purple-50 rounded-md shadow mb-4 py-4">
+    <section className="bg-purple-50 rounded-md shadow mb-4 py-2">
       <div className="grid grid-cols-2 gap-2 w-[90%] mx-auto pt-6">
         <div className="flex flex-col justify-center align-center py-4 px-4">
           <h1 className="text-2xl text-purple-950 font-bold">Amazing Blogs</h1>
