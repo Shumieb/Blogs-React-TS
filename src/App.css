@@ -1,0 +1,6 @@
+.home-hr-style hr {
+  border: 2px solid rgb(83, 3, 83);
+  margin: 0px auto;
+  width: 400px;
+  border-radius: 8px;
+}
