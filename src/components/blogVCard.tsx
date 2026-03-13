@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import type { blogType } from "../utils/entityTypes";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { Link } from "react-router";
 
 interface PropTypes {
   blog: blogType;
@@ -26,6 +28,12 @@ function BlogVCard({ blog }: PropTypes) {
           by {blog.userId}
         </p>
         <p className="text-lg px-2 py-2">{blog.description}</p>
+      </div>
+      <div>
+        <p>category</p>
+        <Link to={`/blogs/${blog.blogId}`}>
+          <FaArrowRightLong />
+        </Link>
       </div>
     </div>
   );

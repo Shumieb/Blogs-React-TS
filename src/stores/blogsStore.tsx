@@ -25,13 +25,35 @@ const useBlogsStore = create(
 
       // Function to get a blog by ID
       getBlogById: (id: number) => {
+        let blog: blogType | undefined;
+
         if (useBlogsStore.getState().blogs.length < 1) {
           //TODO: get data from the database
         } else {
-          return useBlogsStore
+          blog = useBlogsStore
             .getState()
             .blogs.find((blog: blogType) => blog.blogId === id);
         }
+
+        return blog;
+      },
+
+      //Function to get featured blogs
+      getFeaturedBlog: () => {
+        //TODO: Delete from database
+
+        let featureBlogs: blogType[] = [];
+
+        if (useBlogsStore.getState().blogs.length < 1) {
+          // TODO: Get from database
+        } else {
+          // get from state
+          featureBlogs = useBlogsStore
+            .getState()
+            .blogs.filter((blog: blogType) => blog.featured);
+        }
+
+        return featureBlogs;
       },
 
       // Function to add to a new blog
@@ -62,6 +84,7 @@ const useBlogsStore = create(
           blogs: state.blogs.filter((blog: blogType) => blog.blogId != id),
         }));
       },
+
       // end
     }),
   ),
