@@ -8,7 +8,6 @@ import ClearFilterSearch from "../components/clearFilterSearch";
 function BlogsPage() {
   // variables
   const [blogs, setBlogs] = useState<blogType[]>();
-
   const [showClearFilterSearch, setShowClearFilterSearch] = useState(false);
 
   // store

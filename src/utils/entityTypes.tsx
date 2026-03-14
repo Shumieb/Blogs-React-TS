@@ -22,6 +22,7 @@ export interface userType {
 }
 
 export interface categoryType {
+  categoryId: number;
   name: string;
   description: string;
   image: string;

@@ -66,3 +66,32 @@ export const getAuthorByIdFromDb = async (id: number) => {
     return err.message;
   }
 };
+
+// categories
+// get all categories
+export const getAllCategoriesFromDb = async () => {
+  try {
+    const res = await fetch(`http://127.0.0.1:8000/api/categories`);
+    const data = await res.json();
+
+    return data;
+  } catch (err: any) {
+    console.log("Error fetching all categories");
+    return err.message;
+  }
+};
+
+// get an category by Id
+export const getCategoryByIdFromDb = async (id: number) => {
+  try {
+    const res = await fetch(
+      `http://127.0.0.1:8000/api/categories/${id.toString()}`,
+    );
+    const data = await res.json();
+
+    return data;
+  } catch (err: any) {
+    console.log("Error fetching an category by Id");
+    return err.message;
+  }
+};
