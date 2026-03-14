@@ -1,14 +1,23 @@
+import { useState } from "react";
+
 interface PropTypes {
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  handleSearchSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
+  handleSearch: (term: string) => void;
 }
 
-function SearchBlogs({
-  searchTerm,
-  setSearchTerm,
-  handleSearchSubmit,
-}: PropTypes) {
+function SearchBlogs({ handleSearch }: PropTypes) {
+  // variables
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // function to handle submit
+  const handleSearchSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchTerm.length < 3) return;
+    handleSearch(searchTerm);
+
+    //clear state
+    setSearchTerm("");
+  };
+
   return (
     <section>
       <form

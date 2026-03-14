@@ -2,23 +2,14 @@ import FilterBlogsBar from "./filterBlogsBar";
 import SearchBlogs from "./searchBlogs";
 
 interface PropTypes {
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  handleSearchSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
+  handleSearch: (term: string) => void;
 }
-function FilterSeachBar({
-  searchTerm,
-  setSearchTerm,
-  handleSearchSubmit,
-}: PropTypes) {
+
+function FilterSeachBar({ handleSearch }: PropTypes) {
   return (
     <div className="flex justify-between align-center py-2">
       <FilterBlogsBar />
-      <SearchBlogs
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        handleSearchSubmit={handleSearchSubmit}
-      />
+      <SearchBlogs handleSearch={handleSearch} />
     </div>
   );
 }

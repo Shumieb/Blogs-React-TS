@@ -2,11 +2,14 @@ export interface blogType {
   blogId: number;
   title: string;
   description: string;
-  blogText: string;
+  content: string;
   image: string;
-  featured: number;
+  featured: boolean;
   userId: number;
+  userName: string;
   categoryId: number;
+  categoryName: string;
+  likes: number;
 }
 
 export interface userType {
@@ -16,4 +19,10 @@ export interface userType {
   biography: string;
   image: string;
   type: string;
+}
+
+export interface categoryType {
+  name: string;
+  description: string;
+  image: string;
 }

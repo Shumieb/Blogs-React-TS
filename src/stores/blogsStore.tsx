@@ -11,9 +11,11 @@ const useBlogsStore = create(
   combine(
     {
       blogs: [] as blogType[],
+      searchTerm: "",
     },
 
     (set) => ({
+      // Blogs
       // Function to initialize the store
       initializeBlogs: async () => {
         if (useBlogsStore.getState().blogs.length < 1) {
@@ -77,7 +79,7 @@ const useBlogsStore = create(
               (blog: blogType) =>
                 blog.title.toLowerCase().includes(term.toLowerCase()) ||
                 blog.description.toLowerCase().includes(term.toLowerCase()) ||
-                blog.blogText.toLowerCase().includes(term.toLowerCase()),
+                blog.content.toLowerCase().includes(term.toLowerCase()),
             );
         }
 
@@ -110,6 +112,23 @@ const useBlogsStore = create(
         // update state
         set((state) => ({
           blogs: state.blogs.filter((blog: blogType) => blog.blogId != id),
+        }));
+      },
+
+      // searchTerm
+      //Function to set searchTerm
+      addSearchTerm: (term: string) => {
+        // add to state
+        set(() => ({
+          searchTerm: term,
+        }));
+      },
+
+      //Function to remove searchTerm
+      removeSearchTerm: () => {
+        // add to state
+        set(() => ({
+          searchTerm: "",
         }));
       },
 

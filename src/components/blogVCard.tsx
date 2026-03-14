@@ -1,30 +1,11 @@
-import { useEffect, useState } from "react";
 import type { blogType } from "../utils/entityTypes";
 import { Link } from "react-router";
-import useUsersStore from "../stores/userStore";
 
 interface PropTypes {
   blog: blogType;
 }
 
 function BlogVCard({ blog }: PropTypes) {
-  // variables
-  const [blogAuthor, setBlogAuthor] = useState("");
-
-  // store
-  const { getAuthorById } = useUsersStore();
-
-  // run when blog changes
-  useEffect(() => {
-    getAuthorName();
-  }, [blog]);
-
-  // getAuthor Name
-  const getAuthorName = async () => {
-    let author = await getAuthorById(blog.userId);
-    author && setBlogAuthor(author.name);
-  };
-
   return (
     <div className="bg-gray-50 text-purple-950 shadow-md hover:shadow-lg rounded-md">
       <div className="h-50 rounded-md">
@@ -37,7 +18,7 @@ function BlogVCard({ blog }: PropTypes) {
       <div className="py-2 px-2">
         <h2 className="text-xl pt-1 px-2">{blog.title}</h2>
         <p className="text-lg pb-1 text-gray-600 capitalize px-2">
-          by {blogAuthor}
+          by {blog.userName}
         </p>
         <p className="text-lg px-2 py-2 text-purple-900">{blog.description}</p>
       </div>
