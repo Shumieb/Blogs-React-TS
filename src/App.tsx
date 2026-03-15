@@ -31,7 +31,7 @@ function App() {
           element: <BlogPage />,
         },
         {
-          path: "/create-blog",
+          path: "/create-blog/:userId",
           element: <CreateBlogPage />,
         },
         {

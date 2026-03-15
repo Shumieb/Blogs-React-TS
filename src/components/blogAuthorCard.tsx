@@ -10,7 +10,7 @@ function BlogAuthorCard({ blog }: PropTypes) {
     <div className=" grid grid-cols-3 bg-purple-50 text-purple-950 shadow-md hover:shadow-lg rounded-md mb-4">
       <div className="h-60 rounded-md col-span-1">
         <img
-          className="object-cover w-full h-full rounded shadow-md mx-auto"
+          className="object-cover w-full h-full rounded-tl-md rounded-bl-md shadow-md mx-auto"
           src="https://images.pexels.com/photos/36490984/pexels-photo-36490984.jpeg"
           alt="placeholder image"
         />

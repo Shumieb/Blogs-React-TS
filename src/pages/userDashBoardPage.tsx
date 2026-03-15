@@ -7,25 +7,25 @@ import useBlogsStore from "../stores/blogsStore";
 
 function UserDashBoardPage() {
   // variables
-  const [blogs, setBlogs] = useState<blogType[] | []>([]);
+  const [userblogs, setUserBlogs] = useState<blogType[] | []>([]);
 
   // params
   const { userId } = useParams();
 
   // store
-  const { getBlogByAuthorId } = useBlogsStore();
+  const { getBlogByAuthorId, blogs } = useBlogsStore();
 
   // runs when param changes
   useEffect(() => {
     if (userId) {
       getBlog();
     }
-  }, [userId, blogs]);
+  }, [blogs]);
 
   // get blog data
   const getBlog = async () => {
     let foundBlogs = await getBlogByAuthorId(Number(userId));
-    foundBlogs && setBlogs(foundBlogs);
+    foundBlogs && setUserBlogs(foundBlogs);
   };
 
   return (
@@ -42,14 +42,16 @@ function UserDashBoardPage() {
           </button>
           <p className="ms-2 text-xl px-2 pt-1">UserName</p>
         </div>
-        <p className="text-lg text-center text-gray-700">10 Published Blogs</p>
+        <p className="text-lg text-center text-gray-700">
+          {userblogs.length} Published Blogs
+        </p>
       </div>
       <div>
         <div className="flex justify-between align-end my-6">
           <h2 className="text-2xl font-bold">My Blogs</h2>
           <div>
             <Link
-              to={`/create-blog`}
+              to={`/create-blog/${userId}`}
               className="bg-purple-950 text-white text-lg text-center py-2 px-4 rounded-md shadow-md hover:shadow-xl"
             >
               Create New Blog
@@ -58,8 +60,8 @@ function UserDashBoardPage() {
         </div>
 
         <div className="">
-          {blogs &&
-            blogs.map((blog) => {
+          {userblogs &&
+            userblogs.map((blog) => {
               return <BlogAuthorCard blog={blog} key={blog.blogId} />;
             })}
         </div>

@@ -61,14 +61,15 @@ function FilterBlogsBar() {
 
   return (
     <div className="flex justify-start align-center">
+      {/* category filter */}
       <select
         onChange={(e) => handleCategoryFilter(e)}
         value={filterCategoryId}
-        className="border-2 border-purple-950 text-lg py-1 px-2 me-3 rounded outline-none bg-purple-950 text-white capitalize"
+        className="border-2 border-purple-950 text-lg py-1 px-2 me-3 rounded outline-none bg-purple-950 text-white capitalize cursor-pointer"
       >
         <option value={0}>Filter By Category</option>
         {categories &&
-          categories.map((category) => {
+          categories.map((category: categoryType) => {
             return (
               <option value={category.categoryId} key={category.categoryId}>
                 {category.name}
@@ -76,14 +77,16 @@ function FilterBlogsBar() {
             );
           })}
       </select>
+
+      {/* author filter */}
       <select
         onChange={(e) => handleAuthorFilter(e)}
         value={filterAuthorId}
-        className="border-2 border-purple-950 text-lg py-1 px-2 me-3 rounded outline-none bg-purple-950 text-white capitalize"
+        className="border-2 border-purple-950 text-lg py-1 px-2 me-3 rounded outline-none bg-purple-950 text-white capitalize cursor-pointer"
       >
         <option value={0}>Filter By Author</option>
         {authors &&
-          authors.map((author) => {
+          authors.map((author: userType) => {
             return (
               <option value={author.userId} key={author.userId}>
                 {author.name}

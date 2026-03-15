@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { combine } from "zustand/middleware";
 import type { blogType } from "../utils/entityTypes";
 import {
+  addNewBlogToDb,
   getAllBlogFromDb,
   getBlogByAuthorIdFromDb,
   getBlogByIdFromDb,
@@ -218,12 +219,29 @@ const useBlogsStore = create(
       },
 
       // Function to add to a new blog
-      addNewBlog: (newBlog: blogType) => {
-        //TODO: Add to database
-        // add to state
-        set((state) => ({
-          blogs: [...state.blogs, newBlog],
-        }));
+      addNewBlog: async (newBlog: blogType) => {
+        let blogId: number = 0;
+        //Add to database
+        const { id } = await addNewBlogToDb(newBlog);
+
+        // set blog id from Db
+        blogId = id;
+        newBlog.blogId = blogId;
+
+        if (blogId !== 0) {
+          // add to state
+          set((state) => ({
+            blogs: [...state.blogs, newBlog],
+          }));
+        } else {
+          // set temporary blog id
+          blogId = useBlogsStore.getState().blogs.length + 1;
+          newBlog.blogId = blogId;
+          // add to state
+          set((state) => ({
+            blogs: [...state.blogs, newBlog],
+          }));
+        }
       },
 
       //Function to edit an existing blog

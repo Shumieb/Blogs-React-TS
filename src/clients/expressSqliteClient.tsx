@@ -1,3 +1,5 @@
+import type { blogType } from "../utils/entityTypes";
+
 // Blogs
 // get all blogs
 export const getAllBlogFromDb = async () => {
@@ -82,6 +84,40 @@ export const getBlogsBySearchOrFilterFromDb = async (
     console.log(
       "Error fetching blogs by search term or categoryId or authorId",
     );
+    return err.message;
+  }
+};
+
+// add a new blog
+export const addNewBlogToDb = async (newBlog: blogType) => {
+  let newFeatured;
+  if (newBlog.featured) {
+    newFeatured = 1;
+  } else {
+    newFeatured = 0;
+  }
+
+  try {
+    const res = await fetch(`http://127.0.0.1:8000/api/blogs`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: newBlog.title,
+        description: newBlog.description,
+        content: newBlog.content,
+        userId: newBlog.userId,
+        categoryId: newBlog.categoryId,
+        image: newBlog.image,
+      }),
+    });
+
+    const data = await res.json();
+
+    return { id: Number(data.message) };
+  } catch (err: any) {
+    console.log("Error adding new blog");
     return err.message;
   }
 };
