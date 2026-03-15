@@ -3,8 +3,10 @@ import { combine } from "zustand/middleware";
 import type { blogType } from "../utils/entityTypes";
 import {
   getAllBlogFromDb,
+  getBlogByIdFromDb,
   getBlogsBySearchOrFilterFromDb,
   getFeaturedBlogsFromDb,
+  updateBlogLikesInDb,
 } from "../clients/expressSqliteClient";
 
 const useBlogsStore = create(
@@ -33,11 +35,12 @@ const useBlogsStore = create(
       },
 
       // Function to get a blog by ID
-      getBlogById: (id: number) => {
+      getBlogById: async (id: number) => {
         let blog: blogType | undefined;
 
         if (useBlogsStore.getState().blogs.length < 1) {
-          //TODO: get data from the database
+          //get data from the database
+          blog = await getBlogByIdFromDb(id);
         } else {
           blog = useBlogsStore
             .getState()
@@ -215,6 +218,21 @@ const useBlogsStore = create(
             blog.blogId == id ? updatedBlog : blog,
           ),
         }));
+      },
+
+      //Function to edit an existing blog
+      updateBlogLikes: async (blogId: number, updatedLikes: number) => {
+        // Add to database
+        let dbdata = updateBlogLikesInDb(blogId);
+
+        // update state
+        set((state) => ({
+          blogs: state.blogs.map((blog: blogType) =>
+            blog.blogId == blogId ? { ...blog, likes: updatedLikes } : blog,
+          ),
+        }));
+
+        return dbdata;
       },
 
       //Function to delete a blog

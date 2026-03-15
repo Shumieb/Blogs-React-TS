@@ -12,6 +12,19 @@ export const getAllBlogFromDb = async () => {
   }
 };
 
+// get blog by Id
+export const getBlogByIdFromDb = async (id: number) => {
+  try {
+    const res = await fetch(`http://127.0.0.1:8000/api/blogs/${id}`);
+    const data = await res.json();
+
+    return data;
+  } catch (err: any) {
+    console.log("Error fetching data with Id");
+    return err.message;
+  }
+};
+
 // get all featured blogs
 export const getFeaturedBlogsFromDb = async () => {
   try {
@@ -34,15 +47,17 @@ export const getBlogsBySearchOrFilterFromDb = async (
   let query = "";
 
   if (term.length > 0) {
-    query += `?search=${term}`;
+    query += `?searchTerm=${term}`;
+  } else {
+    query += "?searchTerm=";
   }
 
   if (categoryId !== 0) {
-    query += `?categoryId=${categoryId}`;
+    query += `&categoryId=${categoryId}`;
   }
 
   if (authorId != 0) {
-    query += `?authorId=${authorId}`;
+    query += `&authorId=${authorId}`;
   }
 
   try {
@@ -51,7 +66,25 @@ export const getBlogsBySearchOrFilterFromDb = async (
 
     return data;
   } catch (err: any) {
-    console.log("Error fetching blogs by search term");
+    console.log(
+      "Error fetching blogs by search term or categoryId or authorId",
+    );
+    return err.message;
+  }
+};
+
+// update blog likes
+export const updateBlogLikesInDb = async (blogId: number) => {
+  try {
+    const res = await fetch(`http://127.0.0.1:8000/api/blogs/likes/${blogId}`, {
+      method: "PUT",
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (err: any) {
+    console.log("Error fetching updating blog likes");
     return err.message;
   }
 };

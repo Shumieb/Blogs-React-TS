@@ -24,11 +24,11 @@ function App() {
           element: <BlogsPage />,
         },
         {
-          path: "/blogs/:id",
+          path: "/blogs/:blogId",
           element: <BlogPage />,
         },
         {
-          path: "/user-dashboard/:id",
+          path: "/user-dashboard/:userId",
           element: <UserDashBoardPage />,
         },
         {
