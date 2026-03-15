@@ -1,18 +1,20 @@
 import { useState } from "react";
+import useBlogsStore from "../stores/blogsStore";
 
-interface PropTypes {
-  handleSearch: (term: string) => void;
-}
-
-function SearchBlogs({ handleSearch }: PropTypes) {
+function SearchBlogs() {
   // variables
   const [searchTerm, setSearchTerm] = useState("");
+
+  // store
+  const { addSearchTerm } = useBlogsStore();
 
   // function to handle submit
   const handleSearchSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (searchTerm.length < 3) return;
-    handleSearch(searchTerm);
+    // Add search term to store
+    addSearchTerm(searchTerm);
 
     //clear state
     setSearchTerm("");

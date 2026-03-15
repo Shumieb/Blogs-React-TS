@@ -26,9 +26,27 @@ export const getFeaturedBlogsFromDb = async () => {
 };
 
 // get blogs by search term
-export const getBlogsBySearchTermFromDb = async (term: string) => {
+export const getBlogsBySearchOrFilterFromDb = async (
+  term: string,
+  categoryId: number,
+  authorId: number,
+) => {
+  let query = "";
+
+  if (term.length > 0) {
+    query += `?search=${term}`;
+  }
+
+  if (categoryId !== 0) {
+    query += `?categoryId=${categoryId}`;
+  }
+
+  if (authorId != 0) {
+    query += `?authorId=${authorId}`;
+  }
+
   try {
-    const res = await fetch(`http://127.0.0.1:8000/api/blogs?search=${term}`);
+    const res = await fetch(`http://127.0.0.1:8000/api/blogs${query}`);
     const data = await res.json();
 
     return data;

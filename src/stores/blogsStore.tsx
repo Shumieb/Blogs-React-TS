@@ -3,7 +3,7 @@ import { combine } from "zustand/middleware";
 import type { blogType } from "../utils/entityTypes";
 import {
   getAllBlogFromDb,
-  getBlogsBySearchTermFromDb,
+  getBlogsBySearchOrFilterFromDb,
   getFeaturedBlogsFromDb,
 } from "../clients/expressSqliteClient";
 
@@ -12,6 +12,8 @@ const useBlogsStore = create(
     {
       blogs: [] as blogType[],
       searchTerm: "",
+      filterCategory: 0,
+      filterAuthor: 0,
     },
 
     (set) => ({
@@ -64,26 +66,135 @@ const useBlogsStore = create(
       },
 
       // Function to get blogs by search term
-      getBlogsBySearchTerm: async (term: string) => {
-        let searchBlogs: blogType[] = [];
+      getBlogsBySearchOrFilter: async (
+        term: string = "",
+        filterCategoryId: number = 0,
+        filterAuthorId: number = 0,
+      ) => {
+        let searchFilterBlogs: blogType[] = [];
 
         if (useBlogsStore.getState().blogs.length < 1) {
           //Get data from database
-          searchBlogs = await getBlogsBySearchTermFromDb(term);
-          return searchBlogs;
+          searchFilterBlogs = await getBlogsBySearchOrFilterFromDb(
+            term,
+            filterCategoryId,
+            filterAuthorId,
+          );
+          return searchFilterBlogs;
         } else {
           // get from state
-          searchBlogs = useBlogsStore
-            .getState()
-            .blogs.filter(
-              (blog: blogType) =>
-                blog.title.toLowerCase().includes(term.toLowerCase()) ||
-                blog.description.toLowerCase().includes(term.toLowerCase()) ||
-                blog.content.toLowerCase().includes(term.toLowerCase()),
-            );
+          // filter by search term only
+          if (term.length > 0 && filterCategoryId == 0 && filterAuthorId == 0) {
+            searchFilterBlogs = useBlogsStore
+              .getState()
+              .blogs.filter(
+                (blog: blogType) =>
+                  blog.title.toLowerCase().includes(term.toLowerCase()) ||
+                  blog.description.toLowerCase().includes(term.toLowerCase()) ||
+                  blog.content.toLowerCase().includes(term.toLowerCase()),
+              );
+          }
+
+          // filter by categoryId only
+          if (
+            term.length < 1 &&
+            filterCategoryId !== 0 &&
+            filterAuthorId == 0
+          ) {
+            searchFilterBlogs = useBlogsStore
+              .getState()
+              .blogs.filter(
+                (blog: blogType) => blog.categoryId == filterCategoryId,
+              );
+          }
+
+          // filter by authorId only
+          if (
+            term.length < 1 &&
+            filterCategoryId == 0 &&
+            filterAuthorId !== 0
+          ) {
+            searchFilterBlogs = useBlogsStore
+              .getState()
+              .blogs.filter((blog: blogType) => blog.userId == filterAuthorId);
+          }
+
+          // filter by categoryId and search term only
+          if (
+            term.length > 0 &&
+            filterCategoryId !== 0 &&
+            filterAuthorId == 0
+          ) {
+            searchFilterBlogs = useBlogsStore
+              .getState()
+              .blogs.filter(
+                (blog: blogType) =>
+                  blog.categoryId == filterCategoryId &&
+                  (blog.title.toLowerCase().includes(term.toLowerCase()) ||
+                    blog.description
+                      .toLowerCase()
+                      .includes(term.toLowerCase()) ||
+                    blog.content.toLowerCase().includes(term.toLowerCase())),
+              );
+          }
+
+          // filter by authorId and search term only
+          if (
+            term.length > 0 &&
+            filterCategoryId == 0 &&
+            filterAuthorId !== 0
+          ) {
+            searchFilterBlogs = useBlogsStore
+              .getState()
+              .blogs.filter(
+                (blog: blogType) =>
+                  blog.userId == filterAuthorId &&
+                  (blog.title.toLowerCase().includes(term.toLowerCase()) ||
+                    blog.description
+                      .toLowerCase()
+                      .includes(term.toLowerCase()) ||
+                    blog.content.toLowerCase().includes(term.toLowerCase())),
+              );
+          }
+
+          // filter by authorId and categoryId only
+          if (
+            term.length < 1 &&
+            filterCategoryId !== 0 &&
+            filterAuthorId !== 0
+          ) {
+            searchFilterBlogs = useBlogsStore
+              .getState()
+              .blogs.filter(
+                (blog: blogType) =>
+                  blog.userId == filterAuthorId &&
+                  blog.categoryId == filterCategoryId,
+              );
+          }
+
+          // filter by categoryId, authorId and search term only
+          if (
+            term.length > 0 &&
+            filterCategoryId !== 0 &&
+            filterAuthorId !== 0
+          ) {
+            searchFilterBlogs = useBlogsStore
+              .getState()
+              .blogs.filter(
+                (blog: blogType) =>
+                  blog.categoryId == filterCategoryId &&
+                  blog.userId == filterAuthorId &&
+                  (blog.title.toLowerCase().includes(term.toLowerCase()) ||
+                    blog.description
+                      .toLowerCase()
+                      .includes(term.toLowerCase()) ||
+                    blog.content.toLowerCase().includes(term.toLowerCase())),
+              );
+          }
+          //end
         }
 
-        return searchBlogs;
+        return searchFilterBlogs;
       },
 
       // Function to add to a new blog
@@ -129,6 +240,40 @@ const useBlogsStore = create(
         // add to state
         set(() => ({
           searchTerm: "",
+        }));
+      },
+
+      // filterCategory
+      //Function to set filterCategory
+      addFilterCategory: (categoryId: number) => {
+        // add to state
+        set(() => ({
+          filterCategory: categoryId,
+        }));
+      },
+
+      //Function to remove filterCategory
+      removeFilterCategory: () => {
+        // add to state
+        set(() => ({
+          filterCategory: 0,
+        }));
+      },
+
+      // filterAuthors
+      //Function to set filterAuthors
+      addFilterAuthor: (authorId: number) => {
+        // add to state
+        set(() => ({
+          filterAuthor: authorId,
+        }));
+      },
+
+      //Function to remove filterAuthors
+      removeFilterAuthor: () => {
+        // add to state
+        set(() => ({
+          filterAuthor: 0,
         }));
       },
 

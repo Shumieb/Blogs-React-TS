@@ -13,9 +13,10 @@ function BlogsPage() {
   // store
   const {
     initializeBlogs,
-    getBlogsBySearchTerm,
-    addSearchTerm,
-    removeSearchTerm,
+    getBlogsBySearchOrFilter,
+    searchTerm,
+    filterAuthor,
+    filterCategory,
   } = useBlogsStore();
 
   // run on first render
@@ -23,31 +24,34 @@ function BlogsPage() {
     getAllData();
   }, []);
 
+  //runs when search term changes
+  useEffect(() => {
+    if (searchTerm.length > 1 || filterAuthor !== 0 || filterCategory !== 0) {
+      handleSearchFilter(searchTerm, filterCategory, filterAuthor);
+      // hide search bar
+      setShowClearFilterSearch(true);
+    } else {
+      // get all blogs
+      getAllData();
+      // hide search bar
+      setShowClearFilterSearch(false);
+    }
+  }, [searchTerm, filterAuthor, filterCategory]);
+
   // get data
   const getAllData = async () => {
     let dbData = await initializeBlogs();
     setBlogs(dbData);
   };
 
-  // function to search
-  const handleSearch = async (term: string) => {
-    // Add search term to store
-    addSearchTerm(term);
-    // Add functionality search
-    let searchBlogs = await getBlogsBySearchTerm(term);
+  // function to search and filter
+  const handleSearchFilter = async (
+    term: string,
+    category: number,
+    author: number,
+  ) => {
+    let searchBlogs = await getBlogsBySearchOrFilter(term, category, author);
     searchBlogs && setBlogs(searchBlogs);
-    // hide search bar
-    setShowClearFilterSearch(true);
-  };
-
-  // function to clear search
-  const clearSearch = async () => {
-    // hide search bar
-    setShowClearFilterSearch(false);
-    //remove search term
-    removeSearchTerm();
-    // get all blogs
-    getAllData();
   };
 
   return (
@@ -56,9 +60,9 @@ function BlogsPage() {
         Amazing Blogs
       </h2>
 
-      <FilterSeachBar handleSearch={handleSearch} />
+      <FilterSeachBar />
 
-      {showClearFilterSearch && <ClearFilterSearch clearSearch={clearSearch} />}
+      {showClearFilterSearch && <ClearFilterSearch />}
 
       {blogs ? (
         <BlogsList blogs={blogs} />
