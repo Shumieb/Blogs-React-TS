@@ -25,6 +25,19 @@ export const getBlogByIdFromDb = async (id: number) => {
   }
 };
 
+// get blog by Id
+export const getBlogByAuthorIdFromDb = async (id: number) => {
+  try {
+    const res = await fetch(`http://127.0.0.1:8000/api/blogs/author/${id}`);
+    const data = await res.json();
+
+    return data;
+  } catch (err: any) {
+    console.log("Error fetching data with Id");
+    return err.message;
+  }
+};
+
 // get all featured blogs
 export const getFeaturedBlogsFromDb = async () => {
   try {

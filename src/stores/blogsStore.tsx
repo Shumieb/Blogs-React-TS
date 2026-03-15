@@ -3,6 +3,7 @@ import { combine } from "zustand/middleware";
 import type { blogType } from "../utils/entityTypes";
 import {
   getAllBlogFromDb,
+  getBlogByAuthorIdFromDb,
   getBlogByIdFromDb,
   getBlogsBySearchOrFilterFromDb,
   getFeaturedBlogsFromDb,
@@ -48,6 +49,22 @@ const useBlogsStore = create(
         }
 
         return blog;
+      },
+
+      // Function to get a blog by ID
+      getBlogByAuthorId: async (id: number) => {
+        let blogs: blogType[] | undefined;
+
+        if (useBlogsStore.getState().blogs.length < 1) {
+          //get data from the database
+          blogs = await getBlogByAuthorIdFromDb(id);
+        } else {
+          blogs = useBlogsStore
+            .getState()
+            .blogs.filter((blog: blogType) => blog.userId === id);
+        }
+
+        return blogs;
       },
 
       //Function to get featured blogs

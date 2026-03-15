@@ -13,15 +13,12 @@ Tech Stack:
 
 All Users can
 
-- view blogs []
-- sign up []
-- sign in []
-- view dashboard if they are signed in []
-- like blogs []
+- view blogs
+- like blogs
 
 Authors
 
-- view blogs []
+- view blogs
 - sign up []
 - sign in []
 - view dashboard if they are signed in []
