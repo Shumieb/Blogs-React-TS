@@ -161,6 +161,25 @@ export const updateBlogLikesInDb = async (blogId: number) => {
   }
 };
 
+// delete a blog
+export const deleteBlogInDb = async (authorId: number, blogId: number) => {
+  try {
+    const res = await fetch(
+      `http://127.0.0.1:8000/api/blogs/${authorId}/${blogId}`,
+      {
+        method: "DELETE",
+      },
+    );
+
+    const data = await res.json();
+
+    return data;
+  } catch (err: any) {
+    console.log("Error deleting blog");
+    return err.message;
+  }
+};
+
 // Users or Authors
 // get all authors
 export const getAllAuthorsFromDb = async () => {

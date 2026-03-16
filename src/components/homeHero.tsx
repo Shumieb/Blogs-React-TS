@@ -33,7 +33,7 @@ function HomeHero() {
         </div>
         <div className="w-[100%] h-[50vh] rounded-md">
           <img
-            className="object-cover  w-[90%] h-[90%] rounded-br-md rounded-tr-md shadow-md mx-auto"
+            className="object-cover  w-[90%] h-[90%] rounded-md shadow-md mx-auto"
             src="https://images.pexels.com/photos/36308107/pexels-photo-36308107.jpeg"
             alt="hero picture"
           />

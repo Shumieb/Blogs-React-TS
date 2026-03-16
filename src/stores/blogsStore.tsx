@@ -3,6 +3,7 @@ import { combine } from "zustand/middleware";
 import type { blogType } from "../utils/entityTypes";
 import {
   addNewBlogToDb,
+  deleteBlogInDb,
   getAllBlogFromDb,
   getBlogByAuthorIdFromDb,
   getBlogByIdFromDb,
@@ -273,11 +274,13 @@ const useBlogsStore = create(
       },
 
       //Function to delete a blog
-      deleteBlog: (id: number) => {
-        //TODO: Delete from database
+      deleteBlog: async (authorId: number, blogId: number) => {
+        //Delete from database
+        await deleteBlogInDb(authorId, blogId);
+
         // update state
         set((state) => ({
-          blogs: state.blogs.filter((blog: blogType) => blog.blogId != id),
+          blogs: state.blogs.filter((blog: blogType) => blog.blogId != blogId),
         }));
       },
 

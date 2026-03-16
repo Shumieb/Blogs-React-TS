@@ -5,6 +5,7 @@ import type { blogType } from "../utils/entityTypes";
 import { useParams } from "react-router";
 import useBlogsStore from "../stores/blogsStore";
 import LikeButton from "../components/likeButton";
+import { capitalizeFirstLetter } from "../utils/helperFunctions";
 
 function BlogPage() {
   //variable
@@ -41,18 +42,20 @@ function BlogPage() {
   return (
     <section className="w-[90%] px-4 py-4 mx-auto">
       <div className="grid grid-cols-2 gap-2 mx-auto shadow-md bg-purple-50 rounded-md mb-6">
-        <div className="w-[100%] h-[50vh] rounded-md">
+        <div className="w-[100%] h-100 rounded-md py-4 px-2 ">
           <img
-            className="object-cover  w-full h-full rounded-md rounded-md shadow-md mx-auto"
+            className="object-cover w-full h-full rounded-md shadow-md mx-auto"
             src="https://images.pexels.com/photos/36308107/pexels-photo-36308107.jpeg"
             alt="blog picture"
           />
         </div>
-        <div className="py-6 px-4 flex flex-col justify-between align-center">
-          <div>
-            <h2 className="text-2xl text-purple-950 font-bold">{blog.title}</h2>
-            <p className="text-lg mb-4 text-gray-600 capitalize">
-              Category: {blog.categoryName}
+        <div className="pb-6 px-2 flex flex-col justify-between align-center pt-2">
+          <div className="relative">
+            <h2 className="text-2xl text-purple-950 font-bold mt-2 pt-4">
+              {capitalizeFirstLetter(blog.title)}
+            </h2>
+            <p className="text-lg text-gray-600 mb-4">
+              by {capitalizeFirstLetter(blog.userName)}
             </p>
             <p className="text-lg mb-4 text-purple-900">
               {blog.description} Lorem ipsum dolor sit amet consectetur
@@ -60,17 +63,19 @@ function BlogPage() {
               dolor? Molestias, autem. Sit at et impedit expedita explicabo,
               magnam temporibus sed omnis, itaque iure deserunt!
             </p>
-          </div>
-          <div className="flex justify-between align-center">
-            <p className="text-lg text-gray-600 mb-3 capitalize pt-2">
-              By {blog.userName}
+            <p className="text-lg text-white bg-purple-800 rounded-md py-2 px-4 capitalize absolute top-1 right-1">
+              {blog.categoryName}
             </p>
+          </div>
+          <div className="flex justify-between align-center mt-4">
             <LikeButton blogId={blog.blogId} blogLikes={blog.likes} />
           </div>
         </div>
       </div>
       <div>
-        <p className="text-2xl text-purple-950 font-bold mb-4">{blog.title}</p>
+        <p className="text-2xl text-purple-950 font-bold mb-4">
+          {capitalizeFirstLetter(blog.title)}
+        </p>
         <p className="text-lg mb-4 text-purple-900">
           {blog.content} Lorem ipsum dolor sit amet consectetur adipisicing
           elit. Suscipit natus nihil nulla repellat? Laboriosam, amet

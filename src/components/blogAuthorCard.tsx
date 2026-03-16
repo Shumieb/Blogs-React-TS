@@ -10,7 +10,7 @@ interface PropTypes {
 function BlogAuthorCard({ blog }: PropTypes) {
   return (
     <div className="flex justify-between bg-purple-50 text-purple-950 shadow-md hover:shadow-lg rounded-md mb-4">
-      <div className="rounded-md w-[40%] pt-2 pb-2 overflow-hidden h-[100%] px-2">
+      <div className="rounded-md w-[40%] pt-4 pb-2 overflow-hidden h-[100%] px-2">
         <img
           className="object-cover w-full h-80 rounded-md shadow-md mx-auto"
           src="https://images.pexels.com/photos/36490984/pexels-photo-36490984.jpeg"

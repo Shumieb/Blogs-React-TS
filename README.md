@@ -22,9 +22,9 @@ Authors
 - sign up []
 - sign in []
 - view dashboard if they are signed in []
-- add blogs []
-- update their own blogs []
-- delete their own blogs []
+- add blogs
+- update their own blogs
+- delete their own blogs
 
 TODO:
 [] Add functionality to add an email to the mailing list
