@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import type { blogType, categoryType, userType } from "../utils/entityTypes";
 import useUsersStore from "../stores/userStore";
 import useCategoriesStore from "../stores/categoriesStore";
-import { Link, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { FaRegSquare, FaSquareCheck } from "react-icons/fa6";
 import FormLabel from "../components/formLabel";
 import FormTextInput from "../components/FormTextInput";
 import FormTextArea from "../components/formTextArea";
 import useBlogsStore from "../stores/blogsStore";
+import SubmitBtn from "../components/submitBtn";
+import CancelBtn from "../components/cancelBtn";
 
 function CreateBlogPage() {
   //variables
@@ -39,7 +41,7 @@ function CreateBlogPage() {
 
   // get authors and categories
   const getAllData = async () => {
-    // get authors
+    // get author
     if (userId) {
       let dbAuthor = await getAuthorById(Number(userId));
       dbAuthor && setAuthor(dbAuthor);
@@ -51,7 +53,7 @@ function CreateBlogPage() {
   };
 
   // handle form submit
-  const handleFormSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (blogTitle.length < 3) {
@@ -85,7 +87,7 @@ function CreateBlogPage() {
       );
     }
 
-    if (blogImage.length < 3) {
+    if (blogImage.length < 1) {
       newCategory ? (imageUrl = newCategory.image) : "";
     } else {
       imageUrl = blogImage;
@@ -108,7 +110,7 @@ function CreateBlogPage() {
     };
 
     // add to state and database
-    addCreatedBlog(newBlog);
+    await addCreatedBlog(newBlog);
 
     // reset state
     ResetError();
@@ -146,6 +148,9 @@ function CreateBlogPage() {
         {/* title */}
         <div className="py-1 mb-1">
           <FormLabel forTxt="title" labelText="Title:" />
+          <p className="text-gray-600 italic px-2">
+            A title must be at least 4 characters long
+          </p>
           <FormTextInput
             name="title"
             inputValue={blogTitle}
@@ -250,17 +255,8 @@ function CreateBlogPage() {
 
         {/* action buttons */}
         <div className="py-1 mb-2 mt-8 flex justify-center align-center">
-          <input
-            type="submit"
-            value="Create Blog"
-            className="border-3 border-purple-950 text-lg py-1 px-4 rounded bg-purple-950 text-white capitalize me-2 w-[200px] cursor-pointer shadow-md hover:shadow-lg"
-          />
-          <Link
-            to={`/user-dashboard/${userId}`}
-            className="border-3 border-gray-700 text-lg text-center py-1.5 px-4 rounded-md bg-gray-700 text-white capitalize ms-2 w-[200px] shadow-md hover:shadow-lg"
-          >
-            Cancel
-          </Link>
+          <SubmitBtn valueTxt="Create Blog" />
+          <CancelBtn backLink={`/user-dashboard/${userId}`} linkTxt="Cancel" />
         </div>
       </form>
     </section>

@@ -8,6 +8,7 @@ import {
   getBlogByIdFromDb,
   getBlogsBySearchOrFilterFromDb,
   getFeaturedBlogsFromDb,
+  updateBlogInDb,
   updateBlogLikesInDb,
 } from "../clients/expressSqliteClient";
 
@@ -245,12 +246,13 @@ const useBlogsStore = create(
       },
 
       //Function to edit an existing blog
-      updateBlog: (id: number, updatedBlog: blogType) => {
-        // TODO: Add to database
+      updateBlog: async (updatedBlog: blogType) => {
+        // Add to database
+        await updateBlogInDb(updatedBlog);
         // update state
         set((state) => ({
           blogs: state.blogs.map((blog: blogType) =>
-            blog.blogId == id ? updatedBlog : blog,
+            blog.blogId == updatedBlog.blogId ? updatedBlog : blog,
           ),
         }));
       },

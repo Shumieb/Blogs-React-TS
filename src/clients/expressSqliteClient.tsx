@@ -90,13 +90,6 @@ export const getBlogsBySearchOrFilterFromDb = async (
 
 // add a new blog
 export const addNewBlogToDb = async (newBlog: blogType) => {
-  let newFeatured;
-  if (newBlog.featured) {
-    newFeatured = 1;
-  } else {
-    newFeatured = 0;
-  }
-
   try {
     const res = await fetch(`http://127.0.0.1:8000/api/blogs`, {
       method: "POST",
@@ -118,6 +111,36 @@ export const addNewBlogToDb = async (newBlog: blogType) => {
     return { id: Number(data.message) };
   } catch (err: any) {
     console.log("Error adding new blog");
+    return err.message;
+  }
+};
+
+// update a blog
+export const updateBlogInDb = async (updatedBlog: blogType) => {
+  try {
+    const res = await fetch(
+      `http://127.0.0.1:8000/api/blogs/${updatedBlog.userId}/${updatedBlog.blogId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: updatedBlog.title,
+          description: updatedBlog.description,
+          content: updatedBlog.content,
+          image: updatedBlog.image,
+          featured: updatedBlog.featured,
+          categoryId: updatedBlog.categoryId,
+        }),
+      },
+    );
+
+    const data = await res.json();
+
+    return data;
+  } catch (err: any) {
+    console.log("Error updating blog");
     return err.message;
   }
 };
