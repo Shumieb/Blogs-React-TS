@@ -5,12 +5,13 @@ import HomePage from "./pages/homePage";
 import AboutPage from "./pages/aboutPage";
 import BlogsPage from "./pages/blogsPage";
 import BlogPage from "./pages/blogPage";
-import SignIn from "./pages/signIn";
-import SignUp from "./pages/signUp";
 import UserDashBoardPage from "./pages/userDashBoardPage";
 import CreateBlogPage from "./pages/createBlogPage";
 import EditBlogPage from "./pages/editBlogPage";
 import DeleteBlogPage from "./pages/deleteBlogPage";
+import SignInPage from "./pages/signInPage";
+import SignUpPage from "./pages/signUpPage";
+import EditUserDetails from "./pages/editUserDetails";
 
 function App() {
   const router = createBrowserRouter([
@@ -47,12 +48,16 @@ function App() {
           element: <UserDashBoardPage />,
         },
         {
+          path: "/edit-user-details/:userId",
+          element: <EditUserDetails />,
+        },
+        {
           path: "/sign-in",
-          element: <SignIn />,
+          element: <SignInPage />,
         },
         {
           path: "/sign-up",
-          element: <SignUp />,
+          element: <SignUpPage />,
         },
         {
           path: "/about",

@@ -4,6 +4,7 @@ import type { userType } from "../utils/entityTypes";
 import {
   getAllAuthorsFromDb,
   getAuthorByIdFromDb,
+  updateAuthorInDb,
 } from "../clients/expressSqliteClient";
 
 const useUsersStore = create(
@@ -41,6 +42,21 @@ const useUsersStore = create(
         }
 
         return author;
+      },
+
+      //Function to edit an existing author detail
+      updateAuthorDetails: async (updatedAuthor: userType) => {
+        // Add to database
+        await updateAuthorInDb(updatedAuthor);
+
+        // update state
+        set((state) => ({
+          authors: state.authors.map((author: userType) =>
+            author.userId == updatedAuthor.userId ? updatedAuthor : author,
+          ),
+        }));
+
+        console.log(useUsersStore.getState().authors);
       },
 
       // end

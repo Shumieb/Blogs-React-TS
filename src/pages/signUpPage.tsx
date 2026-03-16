@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router";
 
-function SignIn() {
+function SignUpPage() {
   // variables
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [cpassword, setCPassword] = useState("");
 
-  // function to handle sign in
+  // function to handle signing up a new user
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    console.log("handle submit in sign in", userName, password);
+    console.log("handle submit in sign in", userName, password, cpassword);
   };
 
   return (
@@ -39,33 +40,43 @@ function SignIn() {
           name="userName"
           placeholder="Username"
           className="text-lg p-2 border-2 border-purple-950 rounded-md mb-3 text-purple-950 outline-purple-900"
+          value={userName}
           onChange={(e) => setUserName(e.target.value)}
         />
         <input
           type="password"
           name="password"
           placeholder="Password"
-          className="text-lg p-2 border-2 border-purple-950 rounded-md mb-5 text-purple-950 outline-purple-900"
+          className="text-lg p-2 border-2 border-purple-950 rounded-md mb-3 text-purple-950 outline-purple-900"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <input
+          type="password"
+          name="cpassword"
+          placeholder="Confirm Password"
+          className="text-lg p-2 border-2 border-purple-950 rounded-md mb-5 text-purple-950 outline-purple-900"
+          value={cpassword}
+          onChange={(e) => setCPassword(e.target.value)}
+        />
+        <input
           type="submit"
-          value="Sign In"
+          value="Sign Up"
           className="bg-purple-950 text-white py-2 px-6 text-lg rounded-md cursor-pointer"
         />
       </form>
 
       <div className="flex justify-center align-center">
-        <p className="text-lg mx-1">Don't have an account?</p>
+        <p className="text-lg mx-1">Already have an account?</p>
         <Link
-          to="/sign-up"
+          to="/sign-in"
           className="text-purple-950 text-lg italic underline mx-1"
         >
-          Create a Free Account
+          Sign In
         </Link>
       </div>
     </section>
   );
 }
 
-export default SignIn;
+export default SignUpPage;

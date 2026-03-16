@@ -1,4 +1,4 @@
-import type { blogType } from "../utils/entityTypes";
+import type { blogType, userType } from "../utils/entityTypes";
 
 // Blogs
 // get all blogs
@@ -205,6 +205,33 @@ export const getAuthorByIdFromDb = async (id: number) => {
     return data;
   } catch (err: any) {
     console.log("Error fetching an author by Id");
+    return err.message;
+  }
+};
+
+// update an author
+export const updateAuthorInDb = async (updatedAuthor: userType) => {
+  try {
+    const res = await fetch(
+      `http://127.0.0.1:8000/api/users/authors/${updatedAuthor.userId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName: updatedAuthor.userName,
+          biography: updatedAuthor.biography,
+          image: updatedAuthor.image,
+        }),
+      },
+    );
+
+    const data = await res.json();
+
+    return data;
+  } catch (err: any) {
+    console.log("Error updating an author");
     return err.message;
   }
 };

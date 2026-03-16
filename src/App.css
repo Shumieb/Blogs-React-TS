@@ -4,3 +4,11 @@
   width: 400px;
   border-radius: 8px;
 }
+
+.userHrContainer hr {
+  border: 2px solid rgb(75, 1, 75);
+  margin: 0px auto;
+  width: 400px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}

@@ -56,19 +56,19 @@ function CreateBlogPage() {
   const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (blogTitle.length < 3) {
+    if (blogTitle.trim().length < 3) {
       setErrorMsg("Please enter a Title.");
       serError(true);
       return;
     }
 
-    if (blogDescription.length < 10) {
+    if (blogDescription.trim().length < 10) {
       setErrorMsg("Please enter a Summary.");
       serError(true);
       return;
     }
 
-    if (blogContent.length < 20) {
+    if (blogContent.trim().length < 20) {
       setErrorMsg("Please enter Content.");
       serError(true);
       return;
@@ -87,19 +87,19 @@ function CreateBlogPage() {
       );
     }
 
-    if (blogImage.length < 1) {
+    if (blogImage.trim().length < 1) {
       newCategory ? (imageUrl = newCategory.image) : "";
     } else {
-      imageUrl = blogImage;
+      imageUrl = blogImage.trim();
     }
 
     if (!author || !newCategory || !userId) return;
 
     let newBlog = {
       blogId: 0,
-      title: blogTitle,
-      description: blogDescription,
-      content: blogContent,
+      title: blogTitle.trim(),
+      description: blogDescription.trim(),
+      content: blogContent.trim(),
       image: imageUrl,
       featured: blogFeatured,
       userId: Number(userId),
