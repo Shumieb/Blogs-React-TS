@@ -6,7 +6,7 @@ interface PropTypes {
   styles?: string;
 }
 
-function FormTextInput({
+function FormPasswordInput({
   name,
   inputValue,
   placeHolder,
@@ -16,7 +16,7 @@ function FormTextInput({
   return (
     <>
       <input
-        type="text"
+        type="password"
         name={name}
         value={inputValue}
         placeholder={placeHolder}
@@ -27,4 +27,4 @@ function FormTextInput({
   );
 }
 
-export default FormTextInput;
+export default FormPasswordInput;
