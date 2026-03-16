@@ -27,4 +27,6 @@ Authors
 - delete their own blogs
 
 TODO:
+[] Add Authentication
 [] Add functionality to add an email to the mailing list
+[] Add functionality to send a message using the contact form

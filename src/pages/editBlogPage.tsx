@@ -4,7 +4,7 @@ import useCategoriesStore from "../stores/categoriesStore";
 import { useNavigate, useParams } from "react-router";
 import { FaRegSquare, FaSquareCheck } from "react-icons/fa6";
 import FormLabel from "../components/formLabel";
-import FormTextInput from "../components/FormTextInput";
+import FormTextInput from "../components/formTextInput";
 import FormTextArea from "../components/formTextArea";
 import useBlogsStore from "../stores/blogsStore";
 import SubmitBtn from "../components/submitBtn";

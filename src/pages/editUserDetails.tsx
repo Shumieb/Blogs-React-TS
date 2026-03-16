@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import useUsersStore from "../stores/userStore";
 import FormLabel from "../components/formLabel";
-import FormTextInput from "../components/FormTextInput";
+import FormTextInput from "../components/formTextInput";
 import FormTextArea from "../components/formTextArea";
 import SubmitBtn from "../components/submitBtn";
 import CancelBtn from "../components/cancelBtn";
